@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-export default function Product() {
+export default function Product({ products }) {
   const { id } = useParams();
+
+  const selectedProduct = products.find((product) => product.id === id);
+  const { name, price, options, likes } = selectedProduct;
+  // console.log(selectedProduct);
+
+  const [selectedOption, setSelectedOption] = useState("");
+
   return (
     <>
       <div>
@@ -22,21 +29,28 @@ export default function Product() {
               backgroundColor: "#068FFF",
             }}
           >
-            상품{id}
+            {name}
           </div>
           <div>
-            <h3>가격: ~~~~</h3>
-            <h3>좋아요: ~~~~</h3>
+            <h3>가격: {price} 원</h3>
+            <h3>좋아요: {likes} 개</h3>
             <h3>구매옵션</h3>
             <select
               style={{
                 width: "100px",
               }}
+              onChange={(e) => {
+                setSelectedOption(e.target.value);
+              }}
             >
-              <option>옵션1</option>
-              <option>옵션2</option>
-              <option>옵션3</option>
+              <option value="">선택하세요.</option>
+              {options.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
+            <p>구매옵션: {selectedOption}</p>
           </div>
         </div>
       </div>
