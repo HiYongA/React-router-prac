@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 
-export default function Products({ products }) {
+export default function Products({ products, setProducts }) {
   // useSearchParams() : 주소창의 쿼리 매개변수를 읽고 변경할 수 있음!
   const [searchParams, setSearchParams] = useSearchParams();
-
-  // 가격순으로 정렬된 배열을 저장하기 위해 state를 선언함
-  const [sortedProducts, setSortedProducts] = useState(products);
   // console.log(searchParams.get("sort"));
 
   useEffect(() => {
@@ -15,7 +12,7 @@ export default function Products({ products }) {
     // 'sort'파라미터가 price라면,
     sortParam === "price" &&
       // 새로운 products배열에 상품들을 낮은가격순으로 정렬하여 업데이트함
-      setSortedProducts([...products].sort((a, b) => a.price - b.price));
+      setProducts([...products].sort((a, b) => a.price - b.price));
   }, [searchParams]);
 
   return (
@@ -47,7 +44,7 @@ export default function Products({ products }) {
               gap: "24px",
             }}
           >
-            {sortedProducts.map((product) => {
+            {products.map((product) => {
               return (
                 <div key={product.id}>
                   <Link to={`/products/${product.id}`}>
