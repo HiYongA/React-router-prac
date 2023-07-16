@@ -1,8 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Main({ products }) {
+export default function Main() {
   const navigate = useNavigate();
+  const products = useSelector((state) => state.products);
   return (
     <>
       {/* main */}
